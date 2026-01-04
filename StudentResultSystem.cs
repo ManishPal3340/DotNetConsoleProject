@@ -1,21 +1,48 @@
 ﻿using System;
+using System.Collections.Generic;
 
 class StudentResultSystem
 {
-    public static void Main(string[] args)
+    static void Main()
     {
-        Console.WriteLine("Enter Student Name ");
-        string name=Console.ReadLine();
-        Console.WriteLine("Enter Marks :");
-        int marks=Convert.ToInt32(Console.ReadLine())   ;
+        List<int> marks = new List<int>();
 
-        if (marks >= 40)
+        try
         {
-            Console.WriteLine(name+ " is PAss");
+            Console.Write("Enter number of students: ");
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                Console.Write("Enter marks: ");
+                int m = int.Parse(Console.ReadLine());
+
+                if (m < 0 || m > 100)
+                    throw new Exception("Marks must be between 0 and 100");
+
+                marks.Add(m);
+            }
+
+            Console.Write("Enter index to view marks: ");
+            int index = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Marks: " + marks[index]);
         }
-        else
+        catch (FormatException)
         {
-            Console.WriteLine(name + "is fail");
+            Console.WriteLine("Please enter only numbers");
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.WriteLine("Invalid index");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Error: " + e.Message);
+        }
+        finally
+        {
+            Console.WriteLine("Program executed successfully");
         }
     }
 }
