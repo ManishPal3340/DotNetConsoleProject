@@ -1,106 +1,51 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
+using System.Xml.Serialization;
 
-class BankAccount
+using ShopingSystem.service;
+
+
+namespace ShopingSystem
 {
-    private string accHoldName;
-   // private string accountName;
-   // private string accountType;
-    private string accountPassword;
-    private string accHoldEmail;
-    private string accHoldAddress;
-    private double balance;
 
-
-    public void SetName(string name)
+    class Program
     {
-        accHoldName = name; 
-    }
-    public string GetName()
-    {
-        return accHoldName;
-    }
-    public void SetPassword(string password) 
-    {
-        accountPassword = password;
-
-    }
-    public string SetPassword()
-    {
-        return accountPassword;
-    }
-
-    public void SetEmail(string email)
-    {
-        accHoldEmail = email;
-
-    }
-    public string GetEmail()
-    {
-        return accHoldEmail;
-    }
-
-    public void SetAddress(string address)
-    {
-        accHoldAddress=address;
-    }
-    public string GetAddress()
-    {
-        return accHoldAddress;
-
-    }
-
-    public void Deposite(double amount)
-    {
-        if (amount > 0)
+        public static void Main(string[] args)
         {
-            balance += amount;
-            Console.WriteLine("Amount Deposite :" + amount);
+            ShoppingService shop = new ShoppingService();
+            int choice;
+            do
+            {
+                Console.WriteLine("\n==== ONLINE SHOPPING SYSTEM ====");
+                Console.WriteLine("1. View Products");
+                Console.WriteLine("2. Add to Cart");
+                Console.WriteLine("3. Remove from Cart");
+                Console.WriteLine("4. View Cart");
+                Console.WriteLine("5. Place Order");
+                Console.WriteLine("0. Exit");
+                Console.Write("Enter choice: ");
+
+                try
+                {
+                    choice = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid input");
+                    choice = -1;
+                }
+                switch (choice)
+                {
+
+                    case 1: shop.ShowProducts(); break;
+                    case 2: shop.AddToCart(); break;
+                    case 3: shop.RemoveFromCart(); break;
+                    case 4: shop.ViewCart(); break;
+                    case 5: shop.PlaceOrder(); break;
+                    case 0: Console.WriteLine("Thank you for shopping!"); break;
+                    default: Console.WriteLine("Invalid choice"); break;
+                }
+
+            }while (true);
         }
-        else
-        {
-            Console.WriteLine("Invalid Deposite");
-        }
-    }
-
-    public void Withdrow(double amount)
-    {
-
-        if (amount > 0 && amount <= balance)
-        {
-            balance -= amount;
-            Console.WriteLine("Amount Withdrow :" + amount);
-        }
-        else
-        {
-            Console.WriteLine("Insufficient Balance");
-        }
-
-        
-    }
-    public double GetBalance()
-    {
-        return balance; 
-    }
-
-}
-class Program
-{
-    public static void Main(string[] args)
-
-       
-    {
-        BankAccount ac=new BankAccount();
-        ac.SetName("Manish");
-        ac.SetPassword("12345");
-        ac.SetEmail("manish@gmail.com");
-        ac.Deposite(100);
-        ac.Withdrow(10);
-
-        Console.WriteLine("Account Holder: " + ac.GetName());
-        Console.WriteLine("Current Balance: " + ac.GetBalance());
-        Console.WriteLine("Account Password: " + ac.SetPassword());
-        Console.WriteLine("holder Email ID: " + ac.GetAddress());
-        
     }
 }
